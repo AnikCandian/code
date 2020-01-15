@@ -36,4 +36,9 @@ output(string(d) + " is the difference of " + a + " and " + b)
 ## Progress
 - [ ] Finish Scribble
   - [x] Plan the syntax and the overall structure of Scribble
-  - [ ] Create a lexer and a parser in Python or C
+  - [ ] Create a lexer and a parser in Lua
+    - [ ] Lexer
+      - [x] Make tokens
+      - [x] Recognize numbers and ids
+      - [ ] Recognize strings and booleans
+    - [ ] Parser
