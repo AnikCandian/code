@@ -67,3 +67,57 @@ for i, v in pairs(tokens) do
   print(tostring(i)..": "..v[2].." is classified as a "..v[1])
 end
 
+--Same thing with a different twist
+local program = [[135 "ackreik"]] --This is the program for now. Shush.
+
+local tokens = {}
+local function lex(code)
+  local check = 1
+  local endPoint = 1
+  local currentToken = ""
+  while #code >= endPoint do
+    local dataTypa
+    local charac = string.sub(code, endPoint, endPoint)
+    if charac == " " then
+      print(currentToken)
+      if string.sub(currentToken, 1, 1) == "\"" and string.sub(currentToken, #currentToken, #currentToken) == "\"" then
+        print(0)
+        currentToken = string.sub(currentToken, 2, #currentToken - 1)
+        table.insert(tokens, {"string", currentToken})
+        return "a"
+      end
+      if type(tonumber(currentToken)) == "number" then
+        currentToken = currentToken.."n"
+        dataTypa = "number"
+      else
+        dataTypa = "id"
+      end
+      table.insert(tokens, {dataTypa,currentToken})
+      currentToken = ""
+    else
+      currentToken = currentToken..charac
+    end
+    endPoint = endPoint + 1
+  end
+  if type(tonumber(currentToken)) == "number" then
+    currentToken = currentToken.."n"
+    dataTypa = "number"
+  else
+    dataTypa = "id"
+  end
+  table.insert(tokens, {dataTypa,currentToken})
+  while check < #code do
+    for i, v in pairs(tokens) do
+      if v[2] == " " then
+       table.remove(tokens, i)
+      end
+    end
+    check = check + 1
+  end
+end
+
+lex(program)
+
+for i, v in pairs(tokens) do
+  print(tostring(i)..": "..v[2])
+end
